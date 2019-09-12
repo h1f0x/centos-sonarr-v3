@@ -42,6 +42,10 @@ RUN yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
 RUN yum install -y mediainfo libzen libmediainfo curl gettext mono-core mono-devel sqlite.x86_64
 RUN yum install -y git par2cmdline p7zip unrar unzip tar gcc python-feedparser python-configobj python-cheetah python-dbus python-devel libxslt-devel
 
+# crontab
+RUN yum install -y cronie
+RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/verify-services.sh") | crontab -
+
 
 # configure services (systemd)
 RUN systemctl enable sonarr.service
